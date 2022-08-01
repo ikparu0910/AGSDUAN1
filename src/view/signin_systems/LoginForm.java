@@ -5,6 +5,11 @@
  */
 package view.signin_systems;
 
+import dao.AccountDao;
+import javax.swing.JOptionPane;
+import model.Account;
+import view.main_form.MainForm;
+
 /**
  *
  * @author GAMING-PC
@@ -16,7 +21,12 @@ public class LoginForm extends javax.swing.JFrame {
      */
     public LoginForm() {
         initComponents();
+        
+        
     }
+    
+    private AccountDao accountDAO = new AccountDao();
+    
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -27,41 +37,127 @@ public class LoginForm extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        btnNext = new javax.swing.JButton();
+        jPanel1 = new javax.swing.JPanel();
+        LoginButton = new javax.swing.JLabel();
+        cbxShowpass = new javax.swing.JCheckBox();
+        pwPassword = new javax.swing.JPasswordField();
+        txtUsername = new javax.swing.JTextField();
+        jLabel4 = new javax.swing.JLabel();
+        jLabel3 = new javax.swing.JLabel();
+        jLabel2 = new javax.swing.JLabel();
+        jLabel1 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setResizable(false);
 
-        btnNext.setText("Next");
-        btnNext.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnNextActionPerformed(evt);
+        jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        LoginButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/image/LoginButton.png"))); // NOI18N
+        LoginButton.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        LoginButton.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                LoginButtonMouseClicked(evt);
             }
         });
+        jPanel1.add(LoginButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(380, 250, 120, 40));
+
+        cbxShowpass.setText("Hiện mật khẩu");
+        cbxShowpass.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cbxShowpassActionPerformed(evt);
+            }
+        });
+        jPanel1.add(cbxShowpass, new org.netbeans.lib.awtextra.AbsoluteConstraints(510, 250, -1, -1));
+        jPanel1.add(pwPassword, new org.netbeans.lib.awtextra.AbsoluteConstraints(380, 220, 230, -1));
+        jPanel1.add(txtUsername, new org.netbeans.lib.awtextra.AbsoluteConstraints(380, 180, 230, -1));
+
+        jLabel4.setFont(new java.awt.Font("Gabriola", 0, 24)); // NOI18N
+        jLabel4.setText("Password");
+        jPanel1.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 220, -1, -1));
+
+        jLabel3.setFont(new java.awt.Font("Gabriola", 0, 24)); // NOI18N
+        jLabel3.setText("Username");
+        jPanel1.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 180, -1, 40));
+
+        jLabel2.setFont(new java.awt.Font("Monotype Corsiva", 0, 36)); // NOI18N
+        jLabel2.setText("Login");
+        jLabel2.setToolTipText("");
+        jPanel1.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(450, 120, 100, -1));
+
+        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/image/background_login.png"))); // NOI18N
+        jLabel1.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+        jPanel1.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 960, 540));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(184, Short.MAX_VALUE)
-                .addComponent(btnNext)
-                .addGap(161, 161, 161))
+            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGap(59, 59, 59)
-                .addComponent(btnNext)
-                .addContainerGap(218, Short.MAX_VALUE))
+            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
-        pack();
+        setSize(new java.awt.Dimension(976, 579));
+        setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
-    private void btnNextActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNextActionPerformed
+    private void cbxShowpassActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbxShowpassActionPerformed
         // TODO add your handling code here:
+        if(cbxShowpass.isSelected()){
+            pwPassword.setEchoChar((char)0);
+        }
+        else{
+            pwPassword.setEchoChar('*');
+        }
         
-    }//GEN-LAST:event_btnNextActionPerformed
+    }//GEN-LAST:event_cbxShowpassActionPerformed
+    @SuppressWarnings("unused")
+    private void LoginButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_LoginButtonMouseClicked
+        // TODO add your handling code here:
+        if (isEmpty()) {
+            return;
+        }
+        
+        Account account = accountDAO.search(txtUsername.getText().trim());
+        
+        
+        if (account == null) {
+            JOptionPane.showMessageDialog(this, "Có lỗi xảy ra trong quá trình đăng nhập", "Đăng nhập thất bại", JOptionPane.ERROR_MESSAGE);
+            txtUsername.requestFocus();
+            return;
+	}
+        if (account.getUsername() == null) {
+			JOptionPane.showMessageDialog(this, "Tên tài khoản không tồn tại", "Đăng nhập thất bại", JOptionPane.ERROR_MESSAGE);
+			txtUsername.requestFocus();
+			return;
+		}
+		
+		if (new String(pwPassword.getPassword()).equals(account.getPassword()) == false) {
+			JOptionPane.showMessageDialog(this, "Sai mật khẩu", "Đăng nhập thất bại", JOptionPane.ERROR_MESSAGE);
+			pwPassword.requestFocus();
+			return;
+		}
+		
+		if (account.getChucvu().equals("QL")) {
+			JOptionPane.showMessageDialog(this, "Quản lí đăng nhập thành công", "Thông báo", JOptionPane.INFORMATION_MESSAGE);
+			MainForm main = new MainForm();
+                        
+                        main.setVisible(true);
+			this.dispose();
+		}
+		else if (account.getChucvu().equals("NV")) {
+			JOptionPane.showMessageDialog(this, "Nhân viên đăng nhập thành công", "Thông báo", JOptionPane.INFORMATION_MESSAGE);
+			MainForm main = new MainForm();
+                        
+                        main.setVisible(true);
+                       
+			this.dispose();
+		}
+        
+        
+    }//GEN-LAST:event_LoginButtonMouseClicked
 
     /**
      * @param args the command line arguments
@@ -96,10 +192,41 @@ public class LoginForm extends javax.swing.JFrame {
                 new LoginForm().setVisible(true);
             }
         });
+        
+        
     }
+    
+    private boolean isEmpty() {
+		// check txtTenTaiKhoan
+		if (txtUsername.getText().trim().equals("")) {
+			JOptionPane.showMessageDialog(this, "Bạn chưa nhập tên tài khoản", "Đăng nhập thất bại", JOptionPane.ERROR_MESSAGE);
+			
+			txtUsername.requestFocus();
+			return true;
+		}
+		
+		// check pwMatKhau
+		if (new String(pwPassword.getPassword()).equals("")) {
+			JOptionPane.showMessageDialog(this, "Bạn chưa nhập mật khẩu", "Đăng nhập thất bại", JOptionPane.ERROR_MESSAGE);
+			pwPassword.requestFocus();
+			return true;
+		}
+		
+		return false;
+	}
+    
+    
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton btnNext;
+    private javax.swing.JLabel LoginButton;
+    private javax.swing.JCheckBox cbxShowpass;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
+    private javax.swing.JPanel jPanel1;
+    private javax.swing.JPasswordField pwPassword;
+    private javax.swing.JTextField txtUsername;
     // End of variables declaration//GEN-END:variables
 
     

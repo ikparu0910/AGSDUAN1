@@ -36,7 +36,6 @@ public class WelcomeForm extends javax.swing.JFrame {
         jPanel1 = new javax.swing.JPanel();
         txtPercent = new javax.swing.JLabel();
         txtLoading = new javax.swing.JLabel();
-        LoadingBar = new javax.swing.JProgressBar();
         jLabel2 = new javax.swing.JLabel();
 
         setTitle("Mặp");
@@ -47,18 +46,16 @@ public class WelcomeForm extends javax.swing.JFrame {
         jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         txtPercent.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        txtPercent.setForeground(new java.awt.Color(255, 255, 255));
         txtPercent.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        txtPercent.setIcon(new javax.swing.ImageIcon(getClass().getResource("/image/1496.gif"))); // NOI18N
         txtPercent.setText("0 %");
-        jPanel1.add(txtPercent, new org.netbeans.lib.awtextra.AbsoluteConstraints(910, 500, 40, -1));
+        jPanel1.add(txtPercent, new org.netbeans.lib.awtextra.AbsoluteConstraints(850, 474, 100, 60));
 
-        txtLoading.setFont(new java.awt.Font("Segoe UI", 0, 12)); // NOI18N
-        txtLoading.setForeground(new java.awt.Color(255, 255, 255));
+        txtLoading.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         txtLoading.setText("Loading...");
-        jPanel1.add(txtLoading, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 500, 240, -1));
-        jPanel1.add(LoadingBar, new org.netbeans.lib.awtextra.AbsoluteConstraints(-10, 520, 980, 30));
+        jPanel1.add(txtLoading, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 510, 240, -1));
 
-        jLabel2.setIcon(new javax.swing.ImageIcon("C:\\Users\\GAMING-PC\\Desktop\\bg.jpg")); // NOI18N
+        jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/image/background.png"))); // NOI18N
         jPanel1.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
         jLabel2.getAccessibleContext().setAccessibleParent(this);
 
@@ -67,7 +64,7 @@ public class WelcomeForm extends javax.swing.JFrame {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 960, Short.MAX_VALUE)
+                .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -107,11 +104,12 @@ public class WelcomeForm extends javax.swing.JFrame {
         //</editor-fold>
 
         /* Create and display the form */
+        
         WelcomeForm sp = new WelcomeForm();
         sp.setVisible(true);
         
         try{
-            for(int i=0; i<= 102; i= i+3){
+            for(int i=0; i<= 102; i++){
                 Thread.sleep(100);
                 
                 sp.txtPercent.setText(i +"%");
@@ -131,12 +129,11 @@ public class WelcomeForm extends javax.swing.JFrame {
                     sp.txtLoading.setText("Khởi chạy ứng dụng...");
                 }
                 
-                sp.LoadingBar.setValue(i);
                 
-                if(i == 102){
+                if(i == 100){
                     sp.dispose();
-                    Main main = new Main();
-                    main.setVisible(true);
+                    LoginForm lg = new LoginForm();
+                    lg.setVisible(true);
                 }
                 
             }
@@ -148,7 +145,6 @@ public class WelcomeForm extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JProgressBar LoadingBar;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JLabel txtLoading;
